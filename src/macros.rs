@@ -32,7 +32,7 @@ macro_rules! log {
     // log!(target: "my_target", Level::Info, key1:? = 42, key2 = true; "a {} event", "log");
     (target: $target:expr, $lvl:expr, $($key:tt $(:$capture:tt)? $(= $value:expr)?),+; $($arg:tt)+) => ({
         let lvl = $lvl;
-        if lvl <= $crate::STATIC_MAX_LEVEL && lvl <= $crate::max_level() {
+        if lvl <= $crate::STATIC_MAX_LEVEL {
             $crate::__private_api::log::<&_>(
                 $crate::__private_api::format_args!($($arg)+),
                 lvl,
@@ -45,7 +45,7 @@ macro_rules! log {
     // log!(target: "my_target", Level::Info, "a {} event", "log");
     (target: $target:expr, $lvl:expr, $($arg:tt)+) => ({
         let lvl = $lvl;
-        if lvl <= $crate::STATIC_MAX_LEVEL && lvl <= $crate::max_level() {
+        if lvl <= $crate::STATIC_MAX_LEVEL {
             $crate::__private_api::log(
                 $crate::__private_api::format_args!($($arg)+),
                 lvl,
@@ -216,7 +216,6 @@ macro_rules! log_enabled {
     (target: $target:expr, $lvl:expr) => {{
         let lvl = $lvl;
         lvl <= $crate::STATIC_MAX_LEVEL
-            && lvl <= $crate::max_level()
             && $crate::__private_api::enabled(lvl, $target)
     }};
     ($lvl:expr) => {
