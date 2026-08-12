@@ -34,7 +34,8 @@ release_max_level_info  = []
 release_max_level_debug = []
 release_max_level_trace = []
 
-std = []
+alloc = []
+std = ["alloc"]
 
 kv = []
 kv_sval = ["kv", "value-bag/sval", "sval", "sval_ref"]
